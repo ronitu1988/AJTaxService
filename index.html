@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="AJ Tax & Payroll Services Inc. provides tax preparation, bookkeeping, business compliance, and payroll services in Pomona, California." />
   <meta name="theme-color" content="#0b3b60" />
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <script>
+    emailjs.init({
+      publicKey: "bF--FwiItJqMT1y8O"
+    });
+  </script>
   <title>AJ Tax & Payroll Services Inc. | Pomona, CA</title>
   <style>
     :root {
@@ -195,7 +202,7 @@
 
   <header>
     <nav class="container nav" aria-label="Primary navigation">
-      <a class="brand" href="#home" aria-label="AJ Tax and Payroll Services home">
+      <a class="brand" href="#home" aria-label="A&J Tax and Payroll Services home">
         <span class="brand-mark">AJ</span>
         <span>AJ Tax &amp; Payroll<small>Services Inc.</small></span>
       </a>
@@ -329,24 +336,6 @@
       </div>
     </section>
 
-    <section class="section security">
-      <div class="container">
-        <div class="section-head">
-          <div class="eyebrow">Privacy &amp; security</div>
-          <h2>Keep confidential documents off regular email</h2>
-          <p>Tax records and payroll data can contain sensitive personal information. Please use a secure client portal for confidential documents.</p>
-        </div>
-        <div class="security-box">
-          <div class="icon">▣</div>
-          <div>
-            <h3>Do not send sensitive data through this website</h3>
-            <p>Please do not submit Social Security numbers, tax IDs, bank account details, passwords, W-2s, 1099s, payroll files, or tax returns in the contact form. Add your secure portal URL to the button below before publishing.</p>
-            <div class="buttons"><a class="button button-primary" href="#" onclick="alert('Replace this link with your SmartVault, TaxDome, Canopy, or other secure client portal URL.'); return false;">Secure Client Portal</a></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <section class="section section-alt" id="faq">
       <div class="container">
         <div class="section-head">
@@ -381,16 +370,85 @@
             <div class="buttons"><a class="button button-light" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=723+Indian+Hill+Blvd+Pomona+CA+91767">Get Directions</a></div>
           </aside>
           <form id="contactForm" novalidate>
+            <input
+              type="hidden"
+              name="_subject"
+              value="New AJ Tax Service consultation request"
+            >
+
             <div class="form-grid">
-              <div><label for="name">Full name *</label><input id="name" name="name" required autocomplete="name" /></div>
-              <div><label for="phone">Phone number *</label><input id="phone" name="phone" type="tel" required autocomplete="tel" /></div>
-              <div><label for="email">Email address *</label><input id="email" name="email" type="email" required autocomplete="email" /></div>
-              <div><label for="service">Service needed *</label><select id="service" name="service" required><option value="">Select a service</option><option>Individual tax preparation</option><option>Business tax preparation</option><option>Business formation / compliance</option><option>Bookkeeping</option><option>Payroll services</option><option>Tax notice assistance</option><option>Other</option></select></div>
-              <div class="full"><label for="message">Brief message</label><textarea id="message" name="message" placeholder="Briefly describe your needs. Do not include Social Security numbers, tax IDs, bank data, or documents."></textarea></div>
+              <div>
+                <label for="name">Full name *</label>
+                <input
+                  id="name"
+                  name="name"
+                  required
+                  autocomplete="name"
+                />
+              </div>
+
+              <div>
+                <label for="phone">Phone number *</label>
+                <input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  required
+                  autocomplete="tel"
+                />
+              </div>
+
+              <div>
+                <label for="email">Email address *</label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  autocomplete="email"
+                />
+              </div>
+
+              <div>
+                <label for="service">Service needed *</label>
+                <select id="service" name="service" required>
+                  <option value="">Select a service</option>
+                  <option>Individual tax preparation</option>
+                  <option>Business tax preparation</option>
+                  <option>Business formation / compliance</option>
+                  <option>Bookkeeping</option>
+                  <option>Payroll services</option>
+                  <option>Tax notice assistance</option>
+                  <option>Other</option>
+                </select>
+              </div>
+
+              <div class="full">
+                <label for="message">Brief message</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  placeholder="Briefly describe your needs. Do not include Social Security numbers, tax IDs, bank data, or documents."
+                ></textarea>
+              </div>
             </div>
-            <div class="form-warning"><strong>Security notice:</strong> Do not submit Social Security numbers, EINs, bank information, passwords, tax documents, or other confidential records through this form.</div>
-            <button class="button button-primary" type="submit">Request Consultation</button>
-            <div class="status" id="formStatus" role="status" aria-live="polite"></div>
+
+            <div class="form-warning">
+              <strong>Security notice:</strong>
+              Do not submit Social Security numbers, EINs, bank information,
+              passwords, tax documents, or other confidential records through this form.
+            </div>
+
+            <button class="button button-primary" type="submit">
+              Request Consultation
+            </button>
+
+            <div
+              class="status"
+              id="formStatus"
+              role="status"
+              aria-live="polite"
+            ></div>
           </form>
         </div>
       </div>
@@ -423,17 +481,85 @@
       menuButton.textContent = '☰';
     }));
     document.getElementById('year').textContent = new Date().getFullYear();
-    document.getElementById('contactForm').addEventListener('submit', (event) => {
-      event.preventDefault();
-      const form = event.currentTarget;
-      const status = document.getElementById('formStatus');
-      if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
-      }
-      status.textContent = 'Thank you. Your request is ready to be sent. Connect this form to Formspree, Netlify Forms, or your secure CRM before publishing.';
-      form.reset();
-    });
   </script>
+  <script>
+  const EMAILJS_SERVICE_ID = "service_ctdzki9";
+  const EMAILJS_OWNER_TEMPLATE_ID = "template_9gz7oxv";
+  const EMAILJS_CUSTOMER_TEMPLATE_ID = "template_6lxp2av";
+
+  const OWNER_EMAIL = "ajtaxnpayroll@gmail.com";
+
+  document.getElementById("contactForm").addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    const status = document.getElementById("formStatus");
+    const submitButton = form.querySelector('button[type="submit"]');
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      status.textContent = "Please complete all required fields.";
+      return;
+    }
+
+    const formData = new FormData(form);
+
+    const name = formData.get("name")?.trim() || "";
+    const phone = formData.get("phone")?.trim() || "";
+    const email = formData.get("email")?.trim() || "";
+    const service = formData.get("service")?.trim() || "";
+    const message = formData.get("message")?.trim() || "(No message provided)";
+
+    const ownerTemplateData = {
+      to_email: OWNER_EMAIL,
+      from_name: name,
+      from_email: email,
+      phone: phone,
+      service: service,
+      message: message
+    };
+
+    const customerTemplateData = {
+      to_email: email,
+      from_name: name,
+      phone: phone,
+      service: service,
+      message: message
+    };
+
+    try {
+      submitButton.disabled = true;
+      submitButton.textContent = "Sending...";
+      status.textContent = "Sending your request...";
+
+      // Email 1: full request sent to you, the owner.
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_OWNER_TEMPLATE_ID,
+        ownerTemplateData
+      );
+
+      // Email 2: confirmation/copy sent to the customer.
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_CUSTOMER_TEMPLATE_ID,
+        customerTemplateData
+      );
+
+      status.textContent =
+        `Thank you, ${name}. Your request was sent. A confirmation was emailed to ${email}.`;
+
+      form.reset();
+    } catch (error) {
+      console.error("EmailJS form error:", error);
+
+      status.textContent =
+        "Sorry, we could not send your request. Please try again later.";
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = "Request Consultation";
+    }
+  });
+</script>
 </body>
 </html>
